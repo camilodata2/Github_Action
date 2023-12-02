@@ -1,0 +1,17 @@
+name: contexto
+run-name: Este es la solucion al reto
+on:
+ push:
+  branches:
+    - main
+jobs:
+ contex_solution:
+   run-on: ubuntu-lates
+   step:
+    - uses: actions/checkout@v2
+    - name: varible de enterno
+    
+      env:
+       GITHUB_CONTEXT: {{toJson(github)}}
+      run: |
+        echo "$GITHUB_CONTEXT"

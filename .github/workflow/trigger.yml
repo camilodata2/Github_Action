@@ -1,16 +1,13 @@
 name: trigger
+run-name: Estoy aprendiendo realizando el reto de diferentes triggers
 on:
   push:
     branches:
       - main
   schedule:
-    - cron: "30 5,17 * * *"
-  issue:
-    pull_request:
-      types: # Los estados que activarán el trigger
-        - [opened, labeled] # Tomará los estados del PR
-      branches: # Las ramas en las que se activará el workflow
-        - 'releases/**' # En la rama releases y derivados
+    - cron: "0 0 * * *"
+  pull_request:
+    types: [opened, reopened, closed]
 
 jobs:
   reto:
