@@ -1,0 +1,23 @@
+name: trigger
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "30 5,17 * * *"
+  issue:
+    pull_request:
+      types: # Los estados que activarán el trigger
+        - [opened, labeled] # Tomará los estados del PR
+      branches: # Las ramas en las que se activará el workflow
+        - 'releases/**' # En la rama releases y derivados
+
+jobs:
+  reto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: definir variable
+        run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
+      - name: run script
+        run: hola.py
