@@ -1,26 +1,21 @@
-# GITHUB ACTIONS
-GitHub Actions permite a los desarrolladores automatizar, personalizar y ejecutar sus flujos de trabajo de software directamente en GitHub.
+Despliegue de Aplicación a EC2 con GitHub Actions
 
-Uno de los elementos claves para comenzar es la creación de un workflow file, también conocido como yml file. Por ejemplo, un archivo llamado triggers.yml puede hacer que GitHub Actions reconozca que ha completado un desafío específico.
-¿Cómo se crea un workflow file?
+Este repositorio contiene los archivos y configuraciones necesarios para automatizar el despliegue de una aplicación a una instancia EC2 en AWS utilizando GitHub Actions. 🚀
+GitHub Actions
 
-Primero, debe asignar un nombre descriptivo a su workflow, por ejemplo, triggers. A esto, a veces se le llama run name. Este término se refiere a lo que aparecerá en la consola o en la sección de acciones de GitHub.
+GitHub Actions es un servicio de automatización de flujos de trabajo ofrecido por GitHub, que permite definir acciones personalizadas para responder a eventos específicos en un repositorio. En este proyecto, se utiliza una acción personalizada para ejecutar el despliegue de la aplicación a una instancia EC2 cada vez que se realiza un push a la rama principal. ⚙️
+Caso de Uso
 
-Es importante porque a menudo hay más de un workflow en un repositorio, por lo que un run name claro puede ayudar a diferenciarlos.
-¿Cómo se seleccionan los triggers correctos en un workflow file?
+El objetivo principal de este proyecto es simplificar el proceso de despliegue de aplicaciones a una instancia EC2 en AWS. Esto se logra mediante la configuración de GitHub Actions, donde se define el flujo de trabajo necesario para llevar a cabo el despliegue de manera automática y consistente. 🎯
+Proyecto Open-Source
 
-Se pueden usar una amplia variedad de triggers para iniciar un workflow. Estos pueden incluir:
+Este repositorio es un ejemplo open-source que demuestra cómo implementar la automatización del despliegue de una aplicación a una instancia EC2 de AWS utilizando GitHub Actions, la cual puede ser reemplazada por cualquier otra aplicación compatible con este flujo de despliegue. 📦
+Pasos Principales
 
-    Push, que ejecuta el workflow cada vez que se realiza un 'push' a la rama maestra.
-    Pull Request, que se activa cada vez que se abre un 'pull request'.
-    Workflow Dispatch, que permite a los usuarios ejecutar workflows manualmente.
-    Schedule, que ejecuta workflows en un horario específico.
+    Configuración de AWS: Asegúrate de configurar las credenciales de AWS de manera segura en los secretos de tu repositorio. 🔐
+    Modificación de archivos de configuración: Adapta los archivos de configuración para incluir los detalles de tu aplicación y configuración de la instancia EC2. 🛠️
+    Push al Repositorio: Realiza un push a la rama principal para activar el flujo de GitHub Actions y desencadenar el despliegue automático. 📤
 
-¿Cómo se utilizan las expresiones en GitHub Actions?
+Contribución
 
-Las expresiones son elementos indispensables en GitHub Actions. Permiten acceder a valores literales o de variables, comparar diferentes expresiones y utilizar varias funciones.
-
-Existen muchas funciones comunes, como if, contains, toJson y fromJson, que desempeñan roles esenciales en el control de los workflows. Por ejemplo, la función if se puede usar para determinar si se ejecuta un trabajo, mientras que contains puede restringir la ejecución a situaciones específicas.
-
-Por ahora, te animo a jugar con lo que has aprendido y te desafío a crear un archivo workflow llamado 'expresiones.yml' que utilice al menos tres de las expresiones que hemos discutido. Para una guía completa de todas las funciones disponibles de GitHub Actions
-
+¡Las contribuciones son bienvenidas! Siéntete libre de abrir issues o pull requests para mejorar este proyecto. Tu feedback y ayuda son valorados para hacer de esta solución una herramienta más robusta y versátil para la comunidad. 🤝
