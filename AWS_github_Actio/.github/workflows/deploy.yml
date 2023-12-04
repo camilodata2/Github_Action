@@ -2,21 +2,15 @@ name: Build and Deploy
 
 on:
   workflow_dispatch:
-    inputs:
-      cloud_provider:
-        description: 'Select cloud provider'
-        required: true
-        default: 'AWS'
-        options:
-          - "AWS"
-          - "GCP"
-          - "Azure"
-      keypair:
-        description: 'SSH Key Pair'
-        required: true
-
-  issue_comment:
-    types: [created]
+  #  inputs:
+  #    cloud_provider:
+  #      description: 'Select cloud provider'
+  #      required: true
+  #      default: 'AWS'
+  #      options:
+  #        - "AWS"
+  #        - "GCP"
+  #        - "Azure"
 
 env:
   applicationfolder: spring-boot-hello-world-example

@@ -1,0 +1,29 @@
+name: Despliegue CloudFormation Automático
+on:
+  workflow_dispatch:
+    
+
+  schedule:
+    - cron: "0 0 * * *" # Ejecución diaria a la medianoche UTC
+
+jobs:
+  deploy_cloudformation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v2
+
+      - name: Configurar AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{vars.AWS_REGION}}
+
+      - name: Desplegar stack de CloudFormation
+        run: |
+          aws cloudformation crete-stack\
+            --template-file://<path del stack> \
+            --stack-name <NOMBRE-DEL-STACK> \
+            --capabilities CAPABILITY_IAM

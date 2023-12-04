@@ -139,4 +139,58 @@ jobs: Saludo_secretos: runs-on: ubuntu-latest steps: - name: Echo de saludo con 
 
 Las variables y secretos varían en sus usos. A diferencia de los secretos, las variables son utilizadas para guardar valores que no son sensibles. Mientras tanto, los secretos resguardan información altamente sensible, como contraseñas o credenciales.
 
+¿Qué es un flujo de despliegue continuo y cómo se realiza?
+
+El flujo de despliegue continuo utiliza la imagen subida en el paso anterior, y la lanza para desplegarla utilizando los servicios proporcionados por los proveedores cloud. Entre estos servicios se incluyen:
+
+    AppRunner de AWS
+    CloudRun de GCP
+    Azure Container Instances de Azure
+
+Elegir entre estas tres opciones está sujeto a tus necesidades específicas. No es necesario que en tu proyecto personal debas realizarlo en estos tres proveedores o siquiera tengas que subirlo en estos servicios.
+
+* ¿Cómo se configura el flujo de despliegue continuo en AWS?
+
+Para AWS, inicialmente configuramos las credenciales de AWS dentro de nuestro runner utilizando el action oficial de AWS. Creamos un archivo de configuración para AppRunner, especificando la imagen del ECR que creamos en el paso anterior. Cada vez que se detecta un cambio en el proyecto, este cambio se prueba, se compila, y podemos de forma manual indicarle a GitHub que lo despliegue.
+
+Integrar imágenes de Docker en distintos servicios en la nube puede parecer un desafío, pero GitHub y sus workflows facilitan el proceso. Aquí te mostramos cómo hacerlo con ejemplos en AWS, GCP y Azure.
+* ¿Cómo comenzar en GitHub?
+
+Al abordar la segunda etapa de la integración continua, regresar a GitHub es crucial. Aquí se enfoca en la compilación, que se activa con dos tipos de eventos: mediante un workflow dispatch o un comentario en un issue. La selección de AWS, GCP o Azure se hace mediante un input de opción.
+¿Cuál es el propósito del job 'docker-aws'?
+
+El job 'docker-aws' es el trabajo inicial y se ejecuta para compilar la imagen y subirla al registro de AWS. Esto ocurre solo cuando se cumple una condición: el evento que activó el flujo fue un pull request y el comentario del pull request contiene 'build-aws'.
+
+* ¿Cómo se configuran QEMU y Docker BuildX?
+
+Para generar los archivos requeridos para la imagen Docker, se configura QEMU, una opción especial de Docker, usando la acción oficial de Docker llamada setupQemuAction. Además, se emplea otra acción para configurar Docker BuildX, que controla la construcción de las imágenes y es recomendado para entornos de producción.
+
+* ¿Cómo subir la imagen a AWS?
+
+Para cargar la imagen en AWS, se requiere configurar credenciales de un usuario IAM de AWS que contengan accessKeyId y secretAccessKey. Luego, se realiza la autenticación en el Elastic Container Registry (ECR) de AWS, el servicio para cargar y mantener imágenes Docker, usando la acción AmazonECRlogin.
+
+* ¿Cómo añadir la imagen en otros proveedores cloud?
+
+Además de AWS, la imagen se puede añadir en GCP y Azure. En GCP, el registro se denomina 'Artifact Registry'; en Azure, es 'Azure Container Registry'. Para cada opción, busca acciones en el Marketplace y consulta en comunidades cómo otras personas han subido sus imágenes de Docker.
+
+En un mundo donde la automatización es sinónimo de mayor eficiencia y productividad, GitHub Actions se ha revelado como un aliado de oro. Sin embargo, a medida que íbamos implementando GitHub Actions en un proyecto open source, surgió un conjunto de buenas prácticas que decidimos hacer explícitas para optimizar el flujo de trabajo en cualquier proyecto de desarrollo.
+
+A continuación, se detalla una serie de recomendaciones transformadas del discurso a la escritura para maximizar tu rendimiento con GitHub Actions.
+* ¿Por qué es recomendable usar workflows pequeños en GitHub Actions?
+
+Usar workflows pequeños en GitHub Actions es una práctica sugerida. Estos permiten mayor modularización y facilitan la detección y corrección de errores en caso de fallos. La idea detrás de esta práctica es tener workflows definidos para cada proceso en lugar de tener un solo workflow que maneje todo el flujo.
+* ¿Cuál es la importancia de usar timeouts en workflows GitHub Actions?
+
+Los timeouts son parámetros que puedes establecer en los jobs de tus workflows. Estos son cruciales para evitar que un proceso corra indefinidamente debido a un error, lo que podría aumentar el tiempo de ejecución de los runners y, en consecuencia, incrementar los costos - en el caso de los repositorios privados, GitHub cobra por la cantidad de minutos que los runners están en funcionamiento.
+* ¿Qué precauciones se deben tener al utilizar actions de terceros en GitHub Actions?
+
+Con más de 17,000 actions disponibles en el Marketplace de GitHub, la tentación de utilizar actions de terceros puede ser grande. Pero ten en cuenta que al agregar actions de terceros a tus workflows es similar a agregar una nueva dependencia a tu proyecto.
+
+Asegúrate de que las actions sean de un autor confiable, tengan actividad reciente en su repositorio y no presenten amenazas de seguridad para tu proyecto.
+* ¿Por qué es importante especificar la versión de los actions en GitHub Actions?
+
+Especificar la versión de los actions impide que tu trabajo dependa de actualizaciones imprevistas que podrían agregar errores a tu trabajo. Considéralo una forma de garantizar la estabilidad de tu proyecto. También puedes usar el SHA de GitHub, el hash que se genera para un commit específico cuando se requiere alta sensibilidad y fiabilidad en el trabajo.
+* ¿Cómo puede limitarse los permisos del token en GitHub Actions para aumentar la seguridad?
+
+Una de las claves para una buena seguridad en GitHub Actions es limitar los permisos del token. El token predeterminado que crea GitHub puede ser configurado para tener sólo permisos de lectura, agregando permisos de escritura sólo cuando sea absolutamente necesario. Esta es una forma eficaz de reducir vulnerabilidades y mantener a salvo tu proyecto en caso de un ataque a un repositorio de terceros.
 
